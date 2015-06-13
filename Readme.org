@@ -1,0 +1,30 @@
+# -*- word-wrap: nil; -*-
+#+OPTIONS: ^:{}
+#+STARTUP: content
+#+STARTUP: align
+#+STARUP: hideblocks
+
+#+title: ido-pinyin
+
+* 依赖
+  - cl-lib
+  - ido
+* 这是什么
+  Emacs中的ido是十分有用的。但是在匹配的时候如果有中文总是需要切换输入
+  法。我觉得这样是非常不流畅的。我的想法是如果有中文，ido在选择的时候
+  应该直接打中文对应的拼音就可以进行选择了。
+* 原理
+  ido在进行匹配的时候，把候选词的中文都换成对应的拼音就行了。主要就是
+  修改了`ido-set-matches-1'这个函数。
+  
+  我是直接使用 [[https://github.com/pengpengxp/ido-pinyin][chinese-pyim]] 中的函数来将中文转换成拼音的。
+* 安装
+  下载以后直接`load-file'载入这个.el就行了。
+* TODO 还需要改进的地方
+  - [X] 多音字还没有做好。当前只使用一其一个读音。以后再优化
+  - [ ] 现在使用可以实现输入拼音完成匹配。但是输入中文却不能匹配了
+  - [ ] 使用`advice'的方式来修改`ido-set-matches-1'这个函数
+  - [ ] 支持五笔
+  - [ ] 可以使用，但是这样每次都需要查询拼音与汉字的hash表，太慢了。想
+    使用其它语言写一个然后通过外部调用的方式来加速一下。有人推荐我使用
+    python来写一个，理由是C的可移植性太差。
